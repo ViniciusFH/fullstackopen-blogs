@@ -40,7 +40,7 @@ async function createNew(blog) {
 
   await Promise.all([newBlog.save(), user.save()]);
 
-  return newBlog;
+  return { ...newBlog.toJSON(), user };
 }
 
 async function updateById(id, data) {
@@ -48,7 +48,7 @@ async function updateById(id, data) {
     new: true,
     runValidators: true,
     context: 'query',
-  });
+  }).populate('user');
 
   return updatedBlog;
 }
